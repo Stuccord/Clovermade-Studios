@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
+import { HashRouter as Router, Routes, Route, useLocation } from 'react-router-dom'
 import { useEffect } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { AuthProvider } from './context/AuthContext'
@@ -67,7 +67,7 @@ function Layout() {
 
 export default function App() {
   return (
-    <BrowserRouter>
+    <Router>
       <AuthProvider>
         <CartProvider>
           <PortfolioProvider>
@@ -77,6 +77,6 @@ export default function App() {
           </PortfolioProvider>
         </CartProvider>
       </AuthProvider>
-    </BrowserRouter>
+    </Router>
   )
 }

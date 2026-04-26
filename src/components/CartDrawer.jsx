@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { X, Minus, Plus, ShoppingBag, CreditCard, Lock } from 'lucide-react'
+import { X, Minus, Plus, ShoppingBag, Lock } from 'lucide-react'
 import { useCart } from '../context/CartContext'
 import { useAuth } from '../context/AuthContext'
 import { Link, useNavigate } from 'react-router-dom'

@@ -1,12 +1,10 @@
 import { Link } from 'react-router-dom'
 import { ArrowRight } from 'lucide-react'
 import { useReveal } from '../hooks/useReveal'
-import { useCMS } from '../context/CMSContext'
 import './About.css'
 
 export default function About() {
   useReveal()
-  const { content } = useCMS()
 
   return (
     <div className="about-page" style={{ paddingTop: 'var(--nav-h)' }}>

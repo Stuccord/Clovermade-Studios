@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { ArrowDown, ArrowRight, Play, X } from 'lucide-react'
+import { ArrowDown, ArrowRight, X } from 'lucide-react'
 import { useReveal } from '../hooks/useReveal'
 import { useCMS } from '../context/CMSContext'
 import './Home.css'

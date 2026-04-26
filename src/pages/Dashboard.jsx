@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { 
   Download, Maximize2, X, Image as ImageIcon, 
   ShoppingBag, Settings, LogOut, ChevronRight,
-  MessageSquare, Loader2, Activity, Clock, ArrowLeft
+  Loader2, Activity, Clock
 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import './Dashboard.css'

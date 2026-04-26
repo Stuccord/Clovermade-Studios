@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -8,7 +8,6 @@ export default function Login({ portalView = false }) {
   const [isLogin, setIsLogin] = useState(true)
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
-  const [phone, setPhone] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   
@@ -19,19 +18,19 @@ export default function Login({ portalView = false }) {
   const from = location.state?.from || '/dashboard'
   const message = location.state?.message
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     setError('')
     
     if (isLogin) {
-      const res = login(email, password)
+      const res = await login(email, password)
       if (res.success) {
         navigate(from, { replace: true })
       } else {
         setError(res.message || 'Invalid credentials. Please try again.')
       }
     } else {
-      signup(name, email, phone)
+      signup(name, email)
       navigate(from, { replace: true })
     }
   }

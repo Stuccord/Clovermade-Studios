@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { Plus, ArrowRight } from 'lucide-react'
 import { useCart } from '../context/CartContext'
 import { useReveal } from '../hooks/useReveal'
 import './Store.css'

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { MapPin, Phone, Mail, MessageCircle } from 'lucide-react'
+import { MapPin, Phone, Mail } from 'lucide-react'
 import { useReveal } from '../hooks/useReveal'
 import './Contact.css'
 

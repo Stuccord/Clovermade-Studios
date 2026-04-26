@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, useState } from 'react'
 
 const AuthContext = createContext(null)
@@ -82,61 +83,36 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(null)
   const [clients, setClients] = useState(INITIAL_CLIENTS)
 
-  const login = (email, password) => {
-    // Check Admin
-    if (email === ADMIN_USER.email && password === ADMIN_USER.password) {
-      setUser(ADMIN_USER)
-      return { success: true }
+  const findUser = (email, password) => {
+    // If password is provided, check both. If not (like for session restore), just check email.
+    if (password) {
+      if (email === ADMIN_USER.email && password === ADMIN_USER.password) return ADMIN_USER
+      return clients.find(c => c.email === email && c.password === password)
     }
+    if (email === ADMIN_USER.email) return ADMIN_USER
+    return clients.find(c => c.email === email)
+  }
 
-    // Check Clients
-    const client = clients.find(c => c.email === email && c.password === password)
-    
-    if (client) {
-      const { password, ...userData } = client
+  const login = async (email, password) => {
+    const u = findUser(email, password)
+    if (u) {
+      const userData = { ...u }
+      delete userData.password
       setUser(userData)
       return { success: true }
     }
-
-    // Default store user mock
-    if (email) {
-      setUser({ 
-        email, 
-        name: email.split('@')[0],
-        phone: '',
-        address: '',
-        role: 'customer',
-        orders: [
-          { 
-            id: 'ORD-7832', 
-            date: '2026-04-24', 
-            total: 45.00, 
-            status: 'Delivered',
-            address: '123 Default St, City, Country',
-            items: [
-              { name: 'Vibrant Skin Lightroom Preset', price: 45, image: 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=400&q=80', type: 'digital' }
-            ]
-          }
-        ]
-      })
-      return { success: true }
-    }
-    
     return { success: false, message: 'Invalid credentials' }
   }
 
-  const signup = (name, email, phone) => {
-    const newUser = { 
-      name, 
-      email, 
-      phone, 
-      role: 'customer', 
-      status: 'Member',
-      photos: [], 
-      orders: [], 
-      messages: [] 
+  const signup = (name, email) => {
+    const newUser = {
+      id: `user-${Date.now()}`,
+      name,
+      email,
+      role: 'client',
+      orders: [],
+      photos: []
     }
-    setClients(prev => [...prev, newUser])
     setUser(newUser)
     return { success: true }
   }
@@ -233,7 +209,6 @@ export function AuthProvider({ children }) {
         ? { ...c, photos: [...c.photos, ...newPhotos] }
         : c
     ))
-    // If the logged in user is the client being updated, update their state too
     if (user && user.email === clientEmail) {
       setUser(prev => ({ ...prev, photos: [...prev.photos, ...newPhotos] }))
     }
@@ -247,7 +222,7 @@ export function AuthProvider({ children }) {
   const addOrder = (order) => {
     setUser(prev => ({
       ...prev,
-      orders: [order, ...prev.orders]
+      orders: [order, ...(prev.orders || [])]
     }))
   }
   

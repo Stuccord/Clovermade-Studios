@@ -1,15 +1,27 @@
 import { useState, useEffect } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { usePortfolio } from '../context/PortfolioContext'
 import { useCMS } from '../context/CMSContext'
 import { 
-  UserPlus, Mail, Phone, Image as ImageIcon, 
-  Plus, Trash2, Edit2, ChevronRight, 
-  BarChart3, MessageCircle, ShoppingCart, 
-  Settings, LogOut, LayoutDashboard, Layers, 
-  Package, Search, Bell, CheckCircle, ExternalLink,
-  Filter, Eye, Send, X, AlertCircle, RefreshCw, Menu, ArrowLeft
+  Image as ImageIcon,
+  X,
+  LayoutDashboard,
+  UserPlus,
+  Layers,
+  ShoppingCart,
+  Settings,
+  LogOut,
+  Menu,
+  BarChart3,
+  RefreshCw,
+  Plus,
+  Search,
+  Eye,
+  Trash2,
+  Edit2,
+  CheckCircle,
+  AlertCircle
 } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import './AdminDashboard.css'
@@ -17,8 +29,7 @@ import './AdminDashboard.css'
 export default function AdminDashboard() {
   const { 
     user, clients, adminCreateClient, adminAssignPhotos, 
-    adminDeletePhoto, adminUpdateClientStatus, 
-    adminSendMessage, logout, setUser, adminUpdateOrderStatus 
+    logout, setUser, adminUpdateOrderStatus 
   } = useAuth()
   const { portfolio, addPortfolioItem, updatePortfolioItem, deletePortfolioItem } = usePortfolio()
   const { content: cmsContent, updateContent } = useCMS()
@@ -30,16 +41,11 @@ export default function AdminDashboard() {
   
   // Search & Filters
   const [searchTerm, setSearchTerm] = useState('')
-  const [statusFilter, setStatusFilter] = useState('All')
 
   // Photo Assignment State
   const [assigningToEmail, setAssigningToEmail] = useState(null)
   const [photoInputs, setPhotoInputs] = useState([{ title: '', url: '' }])
   
-  // Messaging State
-  const [messagingEmail, setMessagingEmail] = useState(null)
-  const [msgText, setMsgText] = useState('')
-
   const [statusMessage, setStatusMessage] = useState(null)
 
   useEffect(() => {

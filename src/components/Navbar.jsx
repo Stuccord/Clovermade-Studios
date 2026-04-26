@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef } from 'react'
-import { Link, NavLink, useLocation } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { Link, NavLink } from 'react-router-dom'
 import { ShoppingBag, Menu, X, User } from 'lucide-react'
 import { useCart } from '../context/CartContext'
 import { useAuth } from '../context/AuthContext'
@@ -20,7 +20,6 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const { count, setIsOpen } = useCart()
   const { user } = useAuth()
-  const location = useLocation()
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40)
@@ -28,7 +27,7 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  useEffect(() => { setMobileOpen(false) }, [location])
+
 
   return (
     <>

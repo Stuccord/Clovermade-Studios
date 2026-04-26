@@ -417,9 +417,29 @@
   .store-teaser-inner { grid-template-columns: 1fr; }
   .store-teaser-images { height: 380px; }
 }
+
 @media (max-width: 768px) {
   .home-gallery-grid { columns: 1; }
   .store-teaser-images { height: 300px; }
   .services-header { flex-direction: column; align-items: flex-start; gap: 8px; }
   .home-lightbox { padding: 16px; }
+
+  /* Fix: hero text clipped on left edge on mobile */
+  .hero-content.container {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+  }
+  .hero-headline {
+    font-size: clamp(2.2rem, 8vw, 4rem) !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-content.container {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+  .hero-headline {
+    font-size: clamp(1.9rem, 7.5vw, 3rem) !important;
+  }
 }

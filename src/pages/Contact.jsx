@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { MapPin, Phone, Mail } from 'lucide-react'
 import { useReveal } from '../hooks/useReveal'
+import { useCMS } from '../context/CMSContext'
 import './Contact.css'
 
 const InstagramIcon = ({ size = 18 }) => (
@@ -19,6 +20,7 @@ const WhatsAppIcon = ({ size = 18 }) => (
 
 export default function Contact() {
   useReveal()
+  const { content } = useCMS()
   const [status, setStatus] = useState('idle')
 
   const handleSubmit = (e) => {
@@ -31,12 +33,15 @@ export default function Contact() {
     <div className="contact-page" style={{ paddingTop: 'var(--nav-h)' }}>
       <section className="page-hero">
         <div className="contact-hero-bg">
-          <img src="https://images.unsplash.com/photo-1517504734587-2890819debab?w=1600&q=85&fit=crop" alt="Contact hero" />
+          <img src={content.contact?.heroImage || "https://images.unsplash.com/photo-1517504734587-2890819debab?w=1600&q=85&fit=crop"} alt="Contact hero" />
           <div className="overlay-dark" />
         </div>
         <div className="container page-hero-content">
           <span className="section-label">Bookings</span>
-          <h1 className="display-lg" style={{ marginTop: 16 }}>Let’s Capture Your Special Moment</h1>
+          <h1 className="display-lg" style={{ marginTop: 16 }}>{content.contact?.heroTitle || 'Let’s Capture Your Special Moment'}</h1>
+          <p className="body-lg" style={{ maxWidth: 500, marginTop: 16 }}>
+            {content.contact?.heroSubtitle || 'Let\'s create something beautiful together.'}
+          </p>
         </div>
       </section>
 

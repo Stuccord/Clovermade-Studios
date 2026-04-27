@@ -40,7 +40,14 @@ export default function Footer() {
           <div className="footer-col">
             <h4 className="footer-heading">Navigate</h4>
             <ul className="footer-links">
-              {[['/', 'Home'], ['/portfolio', 'Portfolio'], ['/store', 'Print Store'], ['/services', 'Services'], ['/about', 'About'], ['/contact', 'Contact']].map(([to, label]) => (
+              {[
+                ['/', 'Home'], 
+                ['/portfolio', 'Portfolio'], 
+                ['/shop/clothing', 'Clothing'], 
+                ['/shop/digital', 'Digital Assets'], 
+                ['/about', 'About'], 
+                ['/contact', 'Contact']
+              ].map(([to, label]) => (
                 <li key={to}><Link to={to}>{label}</Link></li>
               ))}
             </ul>

@@ -17,7 +17,7 @@ const GALLERY_ITEMS = [
   { id: 101, category: 'Weddings', title: 'The Promise', image: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=800&q=85&fit=crop', size: 'wide' },
   { id: 102, category: 'Portraits', title: 'Quiet Light', image: 'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=800&q=85&fit=crop', size: 'tall' },
   { id: 103, category: 'Events', title: 'Midnight Gala', image: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?w=800&q=85&fit=crop', size: 'normal' },
-  { id: 104, category: 'Lifestyle', title: 'Morning Coffee', image: 'https://images.unsplash.com/photo-1544145945-f904253d0c7b?w=800&q=85&fit=crop', size: 'normal' },
+  { id: 104, category: 'Lifestyle', title: 'Morning Coffee', image: 'https://images.unsplash.com/photo-1497935586351-b67a49e012bf?w=800&q=85&fit=crop', size: 'normal' },
   { id: 105, category: 'Weddings', title: 'First Dance', image: 'https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=800&q=85&fit=crop', size: 'tall' },
   { id: 106, category: 'Portraits', title: 'In Bloom', image: 'https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=800&q=85&fit=crop', size: 'wide' },
 ]
@@ -87,15 +87,18 @@ export default function Home() {
       {/* ── HERO ── */}
       <section className="hero" id="hero">
         <div className="hero-bg" ref={parallaxRef}>
-          {HERO_SLIDES.map((slide, idx) => (
-            <img
-              key={idx}
-              src={slide}
-              alt="Cinematic photography hero"
-              className={`hero-slide ${idx === activeSlide ? 'active' : ''}`}
-              onLoad={() => { if (idx === 0) setHeroLoaded(true) }}
-            />
-          ))}
+          {HERO_SLIDES.map((slide, idx) => {
+            const slideImg = idx === 0 && content.home?.heroImage ? content.home.heroImage : slide;
+            return (
+              <img
+                key={idx}
+                src={slideImg}
+                alt="Cinematic photography hero"
+                className={`hero-slide ${idx === activeSlide ? 'active' : ''}`}
+                onLoad={() => { if (idx === 0) setHeroLoaded(true) }}
+              />
+            )
+          })}
         </div>
         <div className="hero-overlay" />
 
@@ -256,13 +259,13 @@ export default function Home() {
           <div className="store-teaser-inner">
             <div className="store-teaser-images stagger">
               <div className="store-img store-img-1">
-                <img src="https://images.unsplash.com/photo-1445011083072-b61fccc8a5db?w=600&q=85&fit=crop" alt="Print 1" loading="lazy" />
+                <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=600&q=85&fit=crop" alt="Print 1" loading="lazy" />
               </div>
               <div className="store-img store-img-2">
-                <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=85&fit=crop" alt="Print 2" loading="lazy" />
+                <img src="https://images.unsplash.com/photo-1511512578047-dfb367046420?w=600&q=85&fit=crop" alt="Print 2" loading="lazy" />
               </div>
               <div className="store-img store-img-3">
-                <img src="https://images.unsplash.com/photo-1501854140801-50d01698950b?w=600&q=85&fit=crop" alt="Print 3" loading="lazy" />
+                <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=600&q=85&fit=crop" alt="Print 3" loading="lazy" />
               </div>
             </div>
             <div className="store-teaser-text reveal-right">

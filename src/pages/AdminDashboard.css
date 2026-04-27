@@ -18,15 +18,16 @@
   background: var(--admin-bg);
   color: var(--color-cream);
   display: flex;
+  padding-top: var(--nav-h);
 }
 
 /* SIDEBAR (Desktop/Tablet) */
 .admin-sidebar {
   width: var(--admin-sb-w);
-  height: 100vh;
+  height: calc(100vh - var(--nav-h));
   position: fixed;
   left: 0;
-  top: 0;
+  top: var(--nav-h);
   background: #000;
   border-right: 1px solid var(--admin-border);
   display: flex;
@@ -126,7 +127,7 @@
   
   .admin-main {
     margin-left: 0 !important;
-    padding: 24px !important;
+    padding: 20px 16px !important;
   }
   
   .admin-header {
@@ -145,6 +146,10 @@
 
   .grid.col-2 {
     grid-template-columns: 1fr !important;
+  }
+  
+  .admin-card {
+    padding: 20px;
   }
 }
 
@@ -219,6 +224,32 @@
   min-width: 600px;
 }
 
+.admin-table th {
+  text-align: left;
+  padding: 16px 24px;
+  background: rgba(255, 255, 255, 0.02);
+  border-bottom: 1px solid var(--admin-border);
+  color: var(--color-muted);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.admin-table td {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--admin-border);
+  vertical-align: middle;
+}
+
+.admin-table tr:hover td {
+  background: rgba(255, 255, 255, 0.01);
+}
+
+.admin-table tr:last-child td {
+  border-bottom: none;
+}
+
 /* NOTIFICATIONS */
 .admin-notification {
   position: fixed;
@@ -237,3 +268,50 @@
 
 .admin-notification.success { background: #000; border: 1px solid #4CAF50; color: #4CAF50; }
 .admin-notification.error { background: #000; border: 1px solid #ff5050; color: #ff5050; }
+
+/* FORMS */
+.admin-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.admin-input {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--admin-border);
+  color: var(--color-cream);
+  padding: 14px 18px;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  font-weight: 300;
+  outline: none;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.admin-input:focus {
+  border-color: var(--color-gold);
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow: 0 0 0 1px var(--color-gold);
+}
+
+.admin-input::placeholder {
+  color: var(--color-muted);
+}
+
+textarea.admin-input {
+  resize: vertical;
+  min-height: 120px;
+}
+
+select.admin-input {
+  appearance: none;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23888888' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  background-size: 16px;
+  padding-right: 40px;
+}

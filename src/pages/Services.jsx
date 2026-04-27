@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowRight, Check } from 'lucide-react'
 import { useReveal } from '../hooks/useReveal'
+import { useCMS } from '../context/CMSContext'
 import './Services.css'
 
 const SERVICES = [
@@ -48,6 +49,7 @@ const TESTIMONIALS = [
 
 export default function Services() {
   useReveal()
+  const { content } = useCMS()
   const [activeTestimonial, setActiveTestimonial] = useState(0)
 
   // Auto-rotate testimonials
@@ -60,14 +62,14 @@ export default function Services() {
     <div className="services-page" style={{ paddingTop: 'var(--nav-h)' }}>
       <section className="page-hero">
         <div className="services-hero-bg">
-          <img src="https://images.unsplash.com/photo-1606800052052-a08af7148866?w=1600&q=85&fit=crop" alt="Services hero" />
+          <img src={content.services?.heroImage || "https://images.unsplash.com/photo-1606800052052-a08af7148866?w=1600&q=85&fit=crop"} alt="Services hero" />
           <div className="overlay-dark" />
         </div>
         <div className="container page-hero-content">
           <span className="section-label">Investment</span>
-          <h1 className="display-lg" style={{ marginTop: 16 }}>Our Services</h1>
+          <h1 className="display-lg" style={{ marginTop: 16 }}>{content.services?.heroTitle || 'Our Services'}</h1>
           <p className="body-lg" style={{ maxWidth: 460, marginTop: 16 }}>
-            Tailored photographic experiences designed to capture your narrative with cinematic elegance and uncompromising quality.
+            {content.services?.heroSubtitle || 'Tailored photographic experiences designed to capture your narrative with cinematic elegance and uncompromising quality.'}
           </p>
         </div>
       </section>

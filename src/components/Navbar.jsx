@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link, NavLink } from 'react-router-dom'
-import { ShoppingBag, Menu, X, User } from 'lucide-react'
+import { ShoppingBag, Menu, X, User, ChevronDown, Search } from 'lucide-react'
 import { useCart } from '../context/CartContext'
 import { useAuth } from '../context/AuthContext'
 import CartDrawer from './CartDrawer'
@@ -9,8 +9,13 @@ import './Navbar.css'
 const NAV_LINKS = [
   { to: '/', label: 'Home' },
   { to: '/portfolio', label: 'Portfolio' },
-  { to: '/store', label: 'Store' },
-  { to: '/services', label: 'Services' },
+  { 
+    label: 'Shop', 
+    dropdown: [
+      { to: '/shop/clothing', label: 'Clothing' },
+      { to: '/shop/digital', label: 'Digital Assets' }
+    ] 
+  },
   { to: '/about', label: 'About' },
   { to: '/contact', label: 'Contact' },
 ]
@@ -48,14 +53,27 @@ export default function Navbar() {
           <div className="navbar-center">
             <ul className="navbar-links">
               {NAV_LINKS.map(l => (
-                <li key={l.to}>
-                  <NavLink
-                    to={l.to}
-                    end={l.to === '/'}
-                    className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}
-                  >
-                    {l.label}
-                  </NavLink>
+                <li key={l.label} className={l.dropdown ? 'has-dropdown' : ''}>
+                  {l.to ? (
+                    <NavLink
+                      to={l.to}
+                      end={l.to === '/'}
+                      className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}
+                    >
+                      {l.label}
+                    </NavLink>
+                  ) : (
+                    <span className="nav-link dropdown-trigger">
+                      {l.label} <ChevronDown size={12} />
+                      <div className="nav-dropdown">
+                        {l.dropdown.map(d => (
+                          <Link key={d.to} to={d.to} className="dropdown-item">
+                            {d.label}
+                          </Link>
+                        ))}
+                      </div>
+                    </span>
+                  )}
                 </li>
               ))}
             </ul>
@@ -63,20 +81,18 @@ export default function Navbar() {
 
           {/* RIGHT: ACTIONS */}
           <div className="navbar-right">
+            <div className="nav-search-container">
+              <Search size={18} className="search-icon" />
+              <input type="text" placeholder="Search..." className="nav-search-input" />
+            </div>
+
             {user ? (
-              <>
-                {user.role === 'admin' && (
-                  <Link to="/admin" className="nav-btn-subtle nav-btn-admin">
-                    Admin
-                  </Link>
-                )}
-                <Link to="/dashboard" className="nav-btn-subtle">
-                  <User size={14} /> My Account
-                </Link>
-              </>
+              <Link to="/dashboard" className="nav-action-icon" title="Account">
+                <User size={20} />
+              </Link>
             ) : (
-              <Link to="/login" className="nav-btn-subtle">
-                Login
+              <Link to="/login" className="nav-action-icon" title="Login">
+                <User size={20} />
               </Link>
             )}
             
@@ -88,13 +104,9 @@ export default function Navbar() {
               }}
               aria-label="Open cart"
             >
-              <ShoppingBag size={18} />
+              <ShoppingBag size={20} />
               {count > 0 && <span className="cart-badge">{count}</span>}
             </button>
-
-            <Link to="/contact" className="btn btn-primary nav-cta">
-              Book a Session
-            </Link>
 
             <button
               className={`menu-btn ${mobileOpen ? 'hidden' : ''}`}
@@ -104,7 +116,7 @@ export default function Navbar() {
               }}
               aria-label="Open menu"
             >
-              <Menu size={22} />
+              <Menu size={24} />
             </button>
           </div>
         </div>
@@ -127,15 +139,33 @@ export default function Navbar() {
 
         <ul>
           {NAV_LINKS.map(l => (
-            <li key={l.to}>
-              <NavLink 
-                to={l.to} 
-                end={l.to === '/'} 
-                className={({ isActive }) => isActive ? 'mobile-link active' : 'mobile-link'}
-                onClick={() => setMobileOpen(false)}
-              >
-                {l.label}
-              </NavLink>
+            <li key={l.label}>
+              {l.to ? (
+                <NavLink 
+                  to={l.to} 
+                  end={l.to === '/'} 
+                  className={({ isActive }) => isActive ? 'mobile-link active' : 'mobile-link'}
+                  onClick={() => setMobileOpen(false)}
+                >
+                  {l.label}
+                </NavLink>
+              ) : (
+                <div className="mobile-dropdown-section">
+                  <span className="mobile-link disabled">{l.label}</span>
+                  <div className="mobile-dropdown-links">
+                    {l.dropdown.map(d => (
+                      <Link 
+                        key={d.to} 
+                        to={d.to} 
+                        className="mobile-link-sub" 
+                        onClick={() => setMobileOpen(false)}
+                      >
+                        {d.label}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              )}
             </li>
           ))}
           <div className="divider" style={{ margin: '24px 0' }} />

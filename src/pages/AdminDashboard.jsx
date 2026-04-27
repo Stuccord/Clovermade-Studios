@@ -413,44 +413,72 @@ export default function AdminDashboard() {
               </div>
             )}
 
-            {/* 5. CMS */}
+            {/* 5. CMS / PAGE EDITOR */}
             {activeSection === 'settings' && (
-              <div className="grid col-2 gap-32">
+              <div className="stack gap-32">
                 <div className="admin-card">
-                  <h3 className="serif" style={{ marginBottom: 20 }}>Homepage Editor</h3>
-                  <form className="stack gap-16" onSubmit={(e) => {
-                    e.preventDefault()
-                    updateContent('home', { heroTitle: e.target.title.value, heroSubtitle: e.target.sub.value })
-                    showNotification('Homepage copy updated')
-                  }}>
-                    <div className="admin-form-group">
-                      <label className="section-label">Headline</label>
-                      <input name="title" className="admin-input" defaultValue={cmsContent.home.heroTitle} />
-                    </div>
-                    <div className="admin-form-group">
-                      <label className="section-label">Subheadline</label>
-                      <textarea name="sub" className="admin-input" rows={3} defaultValue={cmsContent.home.heroSubtitle} />
-                    </div>
-                    <button className="btn btn-primary" type="submit">Apply Updates</button>
-                  </form>
-                </div>
-                <div className="admin-card">
-                  <h3 className="serif" style={{ marginBottom: 20 }}>About Narrative</h3>
-                  <form className="stack gap-16" onSubmit={(e) => {
-                    e.preventDefault()
-                    updateContent('about', { title: e.target.title.value, description: e.target.desc.value })
-                    showNotification('About page copy updated')
-                  }}>
-                    <div className="admin-form-group">
-                      <label className="section-label">Section Title</label>
-                      <input name="title" className="admin-input" defaultValue={cmsContent.about.title} />
-                    </div>
-                    <div className="admin-form-group">
-                      <label className="section-label">Body Text</label>
-                      <textarea name="desc" className="admin-input" rows={6} defaultValue={cmsContent.about.description} />
-                    </div>
-                    <button className="btn btn-primary" type="submit">Update Story</button>
-                  </form>
+                  <div className="flex-between align-center" style={{ marginBottom: 24 }}>
+                    <h3 className="serif" style={{ fontSize: '1.4rem' }}>Page Content Manager</h3>
+                    <span className="status-pill delivered">Live Sync</span>
+                  </div>
+                  
+                  <div className="grid col-1 gap-32">
+                    {Object.keys(cmsContent).map(pageKey => (
+                      <div key={pageKey} style={{ border: '1px solid var(--admin-border)', padding: 24, borderRadius: 8, background: 'rgba(255,255,255,0.01)' }}>
+                        <h4 className="serif" style={{ fontSize: '1.2rem', marginBottom: 16, textTransform: 'capitalize', color: 'var(--color-gold)' }}>
+                          {pageKey.replace(/([A-Z])/g, ' $1').trim()} Page
+                        </h4>
+                        <form className="grid col-2 gap-24" onSubmit={(e) => {
+                          e.preventDefault()
+                          const updates = {}
+                          if (e.target.heroTitle) updates.heroTitle = e.target.heroTitle.value || e.target.heroTitle.defaultValue
+                          if (e.target.title) updates.title = e.target.title.value || e.target.title.defaultValue
+                          if (e.target.heroSubtitle) updates.heroSubtitle = e.target.heroSubtitle.value || e.target.heroSubtitle.defaultValue
+                          if (e.target.description) updates.description = e.target.description.value || e.target.description.defaultValue
+                          if (e.target.heroImage) updates.heroImage = e.target.heroImage.value || e.target.heroImage.defaultValue
+
+                          updateContent(pageKey, updates)
+                          showNotification(`${pageKey} page updated successfully`)
+                        }}>
+                          <div className="stack gap-16">
+                            <div className="admin-form-group">
+                              <label className="section-label">Page Title / Headline</label>
+                              <input 
+                                name={cmsContent[pageKey].title !== undefined ? "title" : "heroTitle"} 
+                                className="admin-input" 
+                                defaultValue={cmsContent[pageKey].title || cmsContent[pageKey].heroTitle} 
+                              />
+                            </div>
+                            <div className="admin-form-group">
+                              <label className="section-label">Subtitle / Description</label>
+                              <textarea 
+                                name={cmsContent[pageKey].description !== undefined ? "description" : "heroSubtitle"} 
+                                className="admin-input" 
+                                rows={4} 
+                                defaultValue={cmsContent[pageKey].description || cmsContent[pageKey].heroSubtitle} 
+                              />
+                            </div>
+                          </div>
+                          <div className="stack gap-16">
+                            <div className="admin-form-group">
+                              <label className="section-label">Hero/Cover Image URL</label>
+                              <input name="heroImage" className="admin-input" defaultValue={cmsContent[pageKey].heroImage} />
+                            </div>
+                            <div style={{ height: 120, borderRadius: 4, overflow: 'hidden', border: '1px solid var(--admin-border)' }}>
+                              {cmsContent[pageKey].heroImage ? (
+                                <img src={cmsContent[pageKey].heroImage} alt="Cover" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                              ) : (
+                                <div className="flex-center" style={{ height: '100%', background: '#0a0a0a', color: 'var(--color-muted)' }}>
+                                  <ImageIcon size={24} />
+                                </div>
+                              )}
+                            </div>
+                            <button className="btn btn-primary" type="submit" style={{ marginTop: 'auto' }}>Save Changes</button>
+                          </div>
+                        </form>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             )}

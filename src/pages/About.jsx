@@ -1,21 +1,28 @@
 import { Link } from 'react-router-dom'
 import { ArrowRight } from 'lucide-react'
 import { useReveal } from '../hooks/useReveal'
+import { useCMS } from '../context/CMSContext'
 import './About.css'
 
 export default function About() {
   useReveal()
+  const { content } = useCMS()
 
   return (
     <div className="about-page" style={{ paddingTop: 'var(--nav-h)' }}>
       <section className="page-hero">
         <div className="about-hero-bg">
-          <img src="https://images.unsplash.com/photo-1542038784456-1ea8e935640e?w=1600&q=85&fit=crop" alt="About hero" />
+          <img src={content.about?.heroImage || "https://images.unsplash.com/photo-1542038784456-1ea8e935640e?w=1600&q=85&fit=crop"} alt="About hero" />
           <div className="overlay-dark" />
         </div>
         <div className="container page-hero-content">
           <span className="section-label">Our Story</span>
-          <h1 className="display-lg" style={{ marginTop: 16 }}>The Story Behind the Lens</h1>
+          <h1 className="display-lg" style={{ marginTop: 16 }}>{content.about?.title || 'The Story Behind the Lens'}</h1>
+          {content.about?.description && (
+            <p className="body-lg" style={{ maxWidth: 600, marginTop: 16 }}>
+              {content.about?.description}
+            </p>
+          )}
         </div>
       </section>
 
@@ -34,12 +41,12 @@ export default function About() {
                 This realization birthed Clovermade: a hybrid studio where cinematic photography meets bespoke fashion design. We don't just document moments; we craft the entire aesthetic experience, ensuring that your memories and your attire are both timeless masterpieces.
               </p>
               <div className="divider" style={{ margin: '16px 0' }} />
-              <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Signature_of_John_Hancock.svg" alt="Signature" style={{ height: 60, width: 'auto', filter: 'invert(1) opacity(0.5)' }} />
+              <img src="https://upload.wikimedia.org/wikipedia/commons/a/a4/John_Hancock_Signature.svg" alt="Signature" style={{ height: 60, width: 'auto', filter: 'invert(1) opacity(0.5)' }} />
             </div>
             
             <div className="about-images stagger">
               <div className="about-img-main">
-                <img src="https://images.unsplash.com/photo-1554046920-90dcac028a0e?w=800&q=85&fit=crop" alt="Mathias photographing" />
+                <img src="https://images.unsplash.com/photo-1511895426328-dc8714191300?w=800&q=85&fit=crop" alt="Mathias photographing" />
               </div>
               <div className="about-img-sub">
                 <img src="https://images.unsplash.com/photo-1516961642265-531546e84af2?w=500&q=85&fit=crop" alt="Camera gear" />
@@ -116,7 +123,7 @@ export default function About() {
                 name: 'Mathias', 
                 role: 'Founder / Photographer', 
                 desc: 'The visionary behind Clovermade. Mathias specializes in cinematic storytelling and capturing authentic emotion across weddings and editorial campaigns.',
-                img: 'https://images.unsplash.com/photo-1554046920-90dcac028a0e?w=500&q=85&fit=crop' 
+                img: 'https://images.unsplash.com/photo-1511895426328-dc8714191300?w=500&q=85&fit=crop' 
               },
               { 
                 name: 'Elena Rostova', 

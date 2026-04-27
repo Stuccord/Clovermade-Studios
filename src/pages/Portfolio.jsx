@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { ArrowRight, X, Maximize2 } from 'lucide-react'
 import { useReveal } from '../hooks/useReveal'
 import { usePortfolio } from '../context/PortfolioContext'
+import { useCMS } from '../context/CMSContext'
 import './Portfolio.css'
 
 const CATEGORIES = ['All', 'Portrait', 'Wedding', 'Event']
@@ -10,6 +11,7 @@ const CATEGORIES = ['All', 'Portrait', 'Wedding', 'Event']
 export default function Portfolio() {
   useReveal()
   const { portfolio: WORKS } = usePortfolio()
+  const { content } = useCMS()
   const [active, setActive] = useState('All')
   const [lightbox, setLightbox] = useState(null)
 
@@ -20,14 +22,14 @@ export default function Portfolio() {
       {/* Hero */}
       <section className="page-hero portfolio-hero">
         <div className="portfolio-hero-bg">
-          <img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=1600&q=85&fit=crop" alt="Portfolio hero" />
+          <img src={content.portfolio?.heroImage || "https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=1600&q=85&fit=crop"} alt="Portfolio hero" />
           <div className="overlay-dark" />
         </div>
         <div className="container page-hero-content">
           <span className="section-label">Our Work</span>
-          <h1 className="display-lg" style={{ marginTop: 16 }}>Portfolio</h1>
+          <h1 className="display-lg" style={{ marginTop: 16 }}>{content.portfolio?.heroTitle || 'Portfolio'}</h1>
           <p className="body-lg" style={{ maxWidth: 440, marginTop: 16 }}>
-            A curated collection of moments, stories, and visual art spanning five years of craft.
+            {content.portfolio?.heroSubtitle || 'A curated collection of moments, stories, and visual art spanning five years of craft.'}
           </p>
         </div>
       </section>
@@ -57,7 +59,7 @@ export default function Portfolio() {
             {filtered.map(work => (
               <div
                 key={work.id}
-                className={`portfolio-item`}
+                className="portfolio-item"
                 onClick={() => setLightbox(work)}
                 role="button"
                 tabIndex={0}
@@ -65,15 +67,10 @@ export default function Portfolio() {
               >
                 <div className="portfolio-item-img">
                   <img src={work.mainImage} alt={work.title} loading="lazy" />
-                  <div className="overlay-dark" />
-                </div>
-                <div className="portfolio-item-info">
-                  <span className="tag tag-gold">{work.category}</span>
-                  <h3 className="portfolio-item-title">{work.title}</h3>
-                  <p className="body-xs" style={{ color: 'var(--color-muted)', marginTop: 4 }}>{work.description}</p>
-                </div>
-                <div className="portfolio-item-hover">
-                  <span>View Project <Maximize2 size={14} /></span>
+                  <div className="portfolio-item-hover">
+                    <span className="serif">{work.title}</span>
+                    <Maximize2 size={16} />
+                  </div>
                 </div>
               </div>
             ))}

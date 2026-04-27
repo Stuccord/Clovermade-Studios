@@ -10,6 +10,8 @@ import Footer from './components/Footer'
 import Home from './pages/Home'
 import Portfolio from './pages/Portfolio'
 import Store from './pages/Store'
+import Clothing from './pages/Clothing'
+import DigitalAssets from './pages/DigitalAssets'
 import Services from './pages/Services'
 import About from './pages/About'
 import Contact from './pages/Contact'
@@ -39,6 +41,8 @@ function AnimatedRoutes() {
           <Route path="/" element={<Home />} />
           <Route path="/portfolio" element={<Portfolio />} />
           <Route path="/store" element={<Store />} />
+          <Route path="/shop/clothing" element={<Clothing />} />
+          <Route path="/shop/digital" element={<DigitalAssets />} />
           <Route path="/services" element={<Services />} />
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
